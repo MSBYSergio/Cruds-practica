@@ -1,0 +1,21 @@
+{
+    "name": "sergio/crud_2p",
+    "description": "Segundo ejemplo de crud",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "BJSergio",
+            "email": "sergioalhadra2002@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "fakerphp/faker": "^1.24",
+        "mmo/faker-images": "^0.9.0"
+    }
+}

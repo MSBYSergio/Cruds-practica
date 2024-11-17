@@ -1,0 +1,5 @@
+USUARIO = "tu usuario"
+PORT = "tu puerto"
+HOST = "127.0.0.1"
+DB = "tu bd"
+PASSWORD = "tu "

@@ -1,0 +1,20 @@
+{
+    "name": "sergio/juguetes",
+    "description": "Primer ejemplo de composer",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "BJSergio",
+            "email": "sergioalhadra2002@gmail.com"
+        }
+    ],
+    "require": {
+        "fakerphp/faker": "^1.23",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
