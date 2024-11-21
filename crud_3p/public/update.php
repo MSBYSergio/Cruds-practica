@@ -8,7 +8,6 @@ use App\utils\Utilidades;
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-
 if (!$id || $id <= 0) {
     header("Location:productos.php");
     die();
@@ -18,6 +17,7 @@ if (!Producto::existeCampo('id', $id)) {
     header("Location:productos.php");
     die();
 }
+
 $producto = Producto::read($id)[0];
 
 if (isset($_POST["submit"])) {
@@ -101,19 +101,21 @@ if (isset($_POST["submit"])) {
             <textarea id="descripcion" name="descripcion" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"> <?= $producto->descripcion ?></textarea>
             <?php Utilidades::mostrarErrores("err_descripcion") ?>
         </div>
-        <div class="flex items-center me-4">
+        <div class="mb-5">
             <?php
             foreach (Datos::getTipos() as $item) {
                 $estado = "";
-                if ($producto->tipo == $item) {
-                    $estado = "checked";
-                }
+                if($producto -> tipo == $item) {$estado = "checked";}
                 echo <<< TXT
-                    <input id="$item" type="radio" value="$item" $estado name="tipos" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                    <label for="$item" class="mr-3 ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">$item</label>
-                TXT;
+                        <div class="flex items-center me-4">
+                        <input id="$item" type="radio" value="$item" $estado name="group" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="$item" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">$item</label>
+                        </div>  
+                    TXT;
             }
             ?>
+        </div>
+        <div class="flex items-center me-4">
         </div>
         <?php Utilidades::mostrarErrores("err_tipo") ?>
         <input type="file" name="imagen" accept="image/*" oninput="imgpreview.src=window.URL.createObjectURL(this.files[0])" class="mt-5">

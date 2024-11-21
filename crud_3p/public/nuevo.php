@@ -16,7 +16,7 @@ if (isset($_POST["submit"])) {
     if (!Utilidades::isLongitudValida("nombre", $nombre, 3, 60)) {
         $errores = true;
     } else {
-        if (Utilidades::esDuplicado("nombre", $nombre,$id)) {
+        if (Utilidades::esDuplicado("nombre", $nombre)) {
             $errores = true;
         }
     }

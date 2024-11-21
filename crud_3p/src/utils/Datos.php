@@ -6,7 +6,7 @@ class Datos
 {
     public static function getTipos()
     {
-        return ["Bazar", "Alimentación", "Limpieza"];
+        return ["Bazar", "Alimentacion", "Limpieza"];
     }
 
     public static function getFormatos()
