@@ -63,7 +63,7 @@ if (isset($_POST["submit"])) {
 
     $imagenAntigua = $producto->imagen;
 
-    if ($imagen != $imagenAntigua) {
+    if ($imagen != $imagenAntigua) { // Después la elimino si la imagen nueva es distinta de la antigua 
         if ((basename($imagenAntigua) != "default.webp")) {
             unlink($imagenAntigua);
         }

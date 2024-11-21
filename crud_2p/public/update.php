@@ -71,7 +71,8 @@ if (isset($_POST["submit"])) {
         ->setImagen($imagen)
         ->update($id);
 
-    $imagenAntigua = $usuario[0]->imagen;
+    $imagenAntigua = $usuario[0]->imagen; // Esto vale la imagen antigua porque es lo que recojo en el read
+    
     if ($imagenAntigua != $imagen) { // Para eliminarla siempre si son diferentes
         if (basename($imagenAntigua) != 'rana.jpg') {
             unlink($imagenAntigua);

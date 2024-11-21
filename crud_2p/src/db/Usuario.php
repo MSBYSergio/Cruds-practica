@@ -67,6 +67,8 @@ class Usuario extends Conexion
             ($id == null) ? $stmt->execute() : $stmt->execute([':i' => $id]);
         } catch (PDOException $ex) {
             throw new Exception("Error en el método read " . $ex->getMessage(), 1);
+        } finally {
+            parent::cerrarConexion();
         }
 
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -87,6 +89,8 @@ class Usuario extends Conexion
             ]);
         } catch (PDOException $ex) {
             throw new Exception("Error en el método update " . $ex->getMessage(), 1);
+        } finally {
+            parent::cerrarConexion();
         }
     }
 
@@ -100,6 +104,8 @@ class Usuario extends Conexion
             ]);
         } catch (PDOException $ex) {
             throw new Exception("Error en el método delete " . $ex->getMessage(), 1);
+        } finally {
+            parent::cerrarConexion();
         }
     }
 
@@ -119,6 +125,8 @@ class Usuario extends Conexion
             ]);
         } catch (PDOException $ex) {
             throw new Exception("Error en el método existeCampo " . $ex->getMessage(), 1);
+        } finally {
+            parent::cerrarConexion();
         }
         return $stmt->fetchAll(PDO::FETCH_OBJ)[0]->total;
     }
