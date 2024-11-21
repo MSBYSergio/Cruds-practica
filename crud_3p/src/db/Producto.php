@@ -88,14 +88,12 @@ class Producto extends Conexion
 
     public static function existeCampo(string $nombre, string $valor, ?int $id = null): array | bool
     {
-        $q = ($id == null) ? "select count(*) as total from productos where $nombre = :v" : "select count(*) as total from productos where $nombre = :v AND id <> :i";
+        $q = ($id == null) ? "select count(*) as total from productos where $nombre = :v" : "select count(*) as total from productos where $nombre = :v AND id <> $id";
         $stmt = parent::getConexion()->prepare($q);
         try {
             ($id == null) ? $stmt->execute([':v' => $valor]) :
                 $stmt->execute([
-                    ':v' => $valor,
-                    ':i' => $id
-                ]);
+                    ':v' => $valor]);
         } catch (PDOException $ex) {
             throw new Exception("Error en el método existe campo " . $ex->getMessage(), -1);
         } finally {
