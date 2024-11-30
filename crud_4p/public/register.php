@@ -54,7 +54,7 @@ if (isset($_POST["submit"])) {
 
     (new Usuario)
     -> setNombre($nombre)
-    -> setPassword($password)
+    -> setPassword($password,false)
     -> setColorId($color_id)
     -> setPerfil($perfil)
     -> setImagen($imagen)

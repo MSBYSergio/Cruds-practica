@@ -7,9 +7,9 @@ use App\db\Color;
 use App\utils\Datos;
 use App\utils\Utilidades;
 
-/* Mme voy si no estoy logeado o si estoy logeado y mi perfil es Normal  */
+/* Me voy si no estoy logeado o si estoy logeado y mi perfil es Normal  */
 
-if(!isset($_SESSION['login']) || isset($_SESSION['login']) && $_SESSION['login'][1] == "Normal") {
+if (!isset($_SESSION['login']) || isset($_SESSION['login']) && $_SESSION['login'][1] == "Normal") {
     header("Location:usuarios.php");
     die();
 }
@@ -68,12 +68,11 @@ if (isset($_POST["submit"])) {
 
     (new Usuario)
         ->setNombre($nombre)
-        ->setPassword($password)
         ->setColorId($color_id)
         ->setPerfil($perfil)
         ->setImagen($imagenNueva)
-        ->update($id);
-        
+        ->update($id, $password);
+
     $imagenAntigua = $usuario->imagen;
 
     if ($imagenAntigua != $imagenNueva) {

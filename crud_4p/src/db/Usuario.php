@@ -57,7 +57,7 @@ class Usuario extends Conexion
 
             (new Usuario)
                 ->setNombre($nombre)
-                ->setPassword('secret0')
+                ->setPassword('secret0', false)
                 ->setColorId($color_id)
                 ->setPerfil($perfil)
                 ->setImagen($imagen)
@@ -91,14 +91,14 @@ class Usuario extends Conexion
         return (count($resultado)) ? $resultado[0] : false;
     }
 
-    public function update(int $id): void
+    public function update(int $id, string $password): void
     {
-        if (empty($this->password)) { // Encontes aquí en el update, si está vacia no la modifico
+        if (empty($password)) { // Encontes aquí en el update, si está vacia no la modifico
             $q = "update usuarios set nombre=:n, color_id =:c, perfil =:p, imagen =:i where id = :id";
             $parametros = [':n' => $this->nombre, ':c' => $this->color_id, ':p' => $this->perfil, ':i' => $this->imagen, ':id' => $id];
-        } else { // Si tiene contenido entonces la hasheo y la asigno en la BD
+        } else { // Si tiene contenido entonces la hasheo y la actualizo
             $q = "update usuarios set nombre =:n, password =:pass, color_id =:c,perfil =:p,imagen =:i where id = :id";
-            $parametros = [':n' => $this->nombre, ':pass' => $this->password, ':c' => $this->color_id, ':p' => $this->perfil, ':i' => $this->imagen, ':id' => $id];
+            $parametros = [':n' => $this->nombre, ':pass' => $this->setPassword($password, true), ':c' => $this->color_id, ':p' => $this->perfil, ':i' => $this->imagen, ':id' => $id];
         }
         self::executeQuery($q, $parametros, false);
     }
@@ -113,7 +113,7 @@ class Usuario extends Conexion
     {
         // Puede ser que el fetch directamente si no lo encontraba devolviera false (?)
 
-        $q = "select nombre,perfil,password from usuarios where nombre = :n"; // Cogo el perfil para luego mas tarde saber si es Administrador o Normal
+        $q = "select nombre,perfil,password from usuarios where nombre = :n"; // Pilla el perfil para luego mas tarde saber si es Administrador o Normal
         $stmt = self::executeQuery($q, [':n' => $nombre], true);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $array = $stmt->fetch();
@@ -153,14 +153,11 @@ class Usuario extends Conexion
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password, bool $esCadena): self | string 
     {
-        if (!empty($password)) { // Si la contraseña no está vacía que me la codifique
-            $this->password = password_hash($password, PASSWORD_BCRYPT);
-        } else {
-            $this->password = ""; // Sino, que sea una cadena vacía
-        }
-        return $this;
+        // Si es true devuelvo la cadena hasheada sino, devuelvo la cadena para asignarla como parámetro en el update cuando no está vacía
+        $this->password = password_hash($password, PASSWORD_BCRYPT);
+        return ($esCadena) ? $this->password : $this;
     }
 
     public function getColorId(): int
